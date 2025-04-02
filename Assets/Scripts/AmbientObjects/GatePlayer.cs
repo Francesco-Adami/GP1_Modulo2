@@ -8,10 +8,11 @@ public class GatePlayer : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        if (other.GetComponent<Enemy>())
+        Enemy enemy = other.GetComponent<Enemy>();
+        if (enemy)
         {
             Destroy(other.gameObject);
-            GameManager.instance.TakeDamage(other.GetComponent<Enemy>().damage);
+            GameManager.instance.TakeDamage(enemy.damage);
         }
     }
 }

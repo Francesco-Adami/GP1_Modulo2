@@ -9,10 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 779572662091716521}
-  - component: {fileID: 8961375275704142159}
   - component: {fileID: 7974785665710759104}
   m_Layer: 0
-  m_Name: Enemy
+  m_Name: Turret
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -34,21 +33,6 @@ Transform:
   - {fileID: 8947612965994199661}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8961375275704142159
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6607615014102197218}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23926030f3c67a341a6ce65cc8a8b066, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hp: 10
-  damage: 5
-  speed: 5
 --- !u!65 &7974785665710759104
 BoxCollider:
   m_ObjectHideFlags: 0

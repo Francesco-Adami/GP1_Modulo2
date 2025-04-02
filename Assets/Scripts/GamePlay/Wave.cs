@@ -5,13 +5,17 @@ using UnityEngine;
 public class Wave : MonoBehaviour
 {
     [Header("Wave Info")]
-    [SerializeField] private List<WaveData> enemies = new List<WaveData>(); // WaveData
-    [SerializeField] private float spawnTimer;
+    [SerializeField] private List<WaveData> waveData = new List<WaveData>();
 
-    public int waveIndex = 0;
-    public int enemyIndex = 0;
-
+    private int waveIndex = 0;
+    private int enemyIndex = 0;
     private int enemiesSpawned = 0;
+    private Transform spawnPoint;
+
+    private void Start()
+    {
+        spawnPoint = WaveManager.instance.pathPoints[0];
+    }
 
     public void StartWave()
     {
@@ -25,7 +29,7 @@ public class Wave : MonoBehaviour
         while (!IsWaveFinished())
         {
             t += Time.deltaTime;
-            if (t >= enemies[waveIndex].enemiesData[enemyIndex].spawnDelay)
+            if (t >= waveData[waveIndex].enemiesData[enemyIndex].spawnDelay)
             {
                 SpawnNext();
                 t = 0;
@@ -36,25 +40,25 @@ public class Wave : MonoBehaviour
 
     public void SpawnNext()
     {
-        if (enemiesSpawned >= enemies[waveIndex].enemiesData[enemyIndex].quantity)
+        if (enemiesSpawned >= waveData[waveIndex].enemiesData[enemyIndex].quantity)
         {
             enemiesSpawned = 0;
             enemyIndex++;
-            if (enemyIndex >= enemies[waveIndex].enemiesData.Count)
+            if (enemyIndex >= waveData[waveIndex].enemiesData.Count)
             {
                 waveIndex++;
             }
         }
         if (!IsWaveFinished())
         {
-            Instantiate(enemies[waveIndex].enemiesData[enemyIndex].enemy);
+            Instantiate(waveData[waveIndex].enemiesData[enemyIndex].enemy, spawnPoint.position, Quaternion.identity);
             enemiesSpawned++;
         }
     }
 
     public bool IsWaveFinished()
     {
-        if (waveIndex >= enemies.Count)
+        if (waveIndex >= waveData.Count)
             return true;
         return false;
     }
