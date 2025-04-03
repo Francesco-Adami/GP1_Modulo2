@@ -42,21 +42,27 @@ public class TowerDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, 
         if (towerPreview == null)
             return;
 
-        print("end drag");
-
         Ray ray = mainCamera.ScreenPointToRay(eventData.position);
         if (Physics.Raycast(ray, out RaycastHit hit))
         {
             // Controlla se l'oggetto colpito è una zona di placement (con tag "TowerPlacement")
             if (hit.collider.CompareTag("TowerPlacement"))
             {
-                print("collider hittato");
                 // Prova a ottenere lo script TowerPlacementZone
                 TowerPlacementZone zone = hit.collider.GetComponent<TowerPlacementZone>();
+
                 if (zone != null)
                 {
+                    // se ha già 3 torrette non si aggiungono allo stack
+                    if (zone.GetStackNum() >= 3)
+                    {
+                        Destroy(towerPreview);
+                        return;
+                    }
+
                     // Snappa la torretta al centro della zona
                     towerPreview.transform.position = zone.GetSnapPosition();
+                    zone.AddStackNum();
                 }
                 else
                 {
@@ -67,7 +73,6 @@ public class TowerDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, 
             }
             else
             {
-                print("drop non è valido");
                 // Se il drop non è valido, distruggi la preview
                 Destroy(towerPreview);
             }
