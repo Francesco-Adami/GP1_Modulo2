@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e64e554cf8d0624ea54714435a6b837, type: 3}
   m_Name: PU_FireRate
   m_EditorClassIdentifier: 
-  boostPercentage: 15
+  boostPercentage: 20
   powerUpType: 0
