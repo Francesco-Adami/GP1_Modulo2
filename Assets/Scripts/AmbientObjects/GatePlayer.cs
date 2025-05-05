@@ -11,8 +11,9 @@ public class GatePlayer : MonoBehaviour
         Enemy enemy = other.GetComponent<Enemy>();
         if (enemy)
         {
-            Destroy(other.gameObject);
+            EnemiesManager.instance.RemoveEnemyFromTurrets(other.transform);
             GameManager.instance.TakeDamage(enemy.damage);
+            Destroy(other.gameObject);
         }
     }
 }

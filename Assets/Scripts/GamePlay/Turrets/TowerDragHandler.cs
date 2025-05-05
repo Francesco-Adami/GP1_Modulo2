@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -7,13 +8,20 @@ public class TowerDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, 
     private GameObject towerPreview;
     private Camera mainCamera;
 
+    [Header("Tower DATA")]
+    [SerializeField] private int towerCost;
+    [SerializeField] private TextMeshProUGUI towerCostText;
+
     private void Awake()
     {
         mainCamera = Camera.main;
+        towerCostText.text = "$" + towerCost.ToString();
     }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        if (GameManager.instance.GetMoney() < towerCost) return;
+
         if (towerPrefab != null)
         {
             towerPreview = Instantiate(towerPrefab);
@@ -42,8 +50,11 @@ public class TowerDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, 
         if (towerPreview == null)
             return;
 
+        int ignoreLayer = LayerMask.NameToLayer("Turret");
+        int layerMask = ~(1 << ignoreLayer);
+
         Ray ray = mainCamera.ScreenPointToRay(eventData.position);
-        if (Physics.Raycast(ray, out RaycastHit hit))
+        if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, ~0, QueryTriggerInteraction.Ignore))
         {
             // Controlla se l'oggetto colpito è una zona di placement (con tag "TowerPlacement")
             if (hit.collider.CompareTag("TowerPlacement"))
@@ -62,14 +73,32 @@ public class TowerDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, 
 
                     // Snappa la torretta al centro della zona
                     towerPreview.transform.position = zone.GetSnapPosition();
+                    Turret turret = towerPreview.GetComponent<Turret>();
+                    if (turret != null)
+                    {
+                        zone.AddTurret(turret);
+                        turret.isPlaced = true;
+                    }
+                    PowerUp powerUp = towerPreview.GetComponent<PowerUp>();
+                    if (powerUp != null)
+                    {
+                        if (zone.turrets.Count <= 0)
+                        {
+                            Destroy(towerPreview);
+                            return;
+                        }
+                        powerUp.AssignZone(zone);
+                        powerUp.ApplyPowerupForeachTurret();
+                    }
                     zone.AddStackNum();
+                    GameManager.instance.RemoveMoney(towerCost);
+                    towerPreview = null;
                 }
                 else
                 {
                     // Altrimenti usa il centro dei bounds del collider
                     towerPreview.transform.position = hit.collider.bounds.center;
                 }
-                // (Opzionale) Qui puoi attivare altri componenti o trasferire l'oggetto a un manager.
             }
             else
             {

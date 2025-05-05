@@ -28,13 +28,17 @@ public class Wave : MonoBehaviour
 
         while (!IsWaveFinished())
         {
-            t += Time.deltaTime;
-            if (t >= waveData[waveIndex].enemiesData[enemyIndex].spawnDelay)
+            if (!GameManager.instance.isGameActive) yield return null;
+            else
             {
-                SpawnNext();
-                t = 0;
+                t += Time.deltaTime;
+                if (t >= waveData[waveIndex].enemiesData[enemyIndex].spawnDelay)
+                {
+                    SpawnNext();
+                    t = 0;
+                }
+                yield return null;
             }
-            yield return null;
         }
     }
 

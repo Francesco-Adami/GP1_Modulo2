@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -31,6 +32,12 @@ public class WaveManager : MonoBehaviour
     {
         while (currentWaveIndex < waves.Count)
         {
+            // Controlla se il gioco è attivo
+            if (!GameManager.instance.isGameActive)
+            {
+                yield return null;
+            }
+
             // Avvia l'onda corrente
             Wave currentWave = waves[currentWaveIndex];
             currentWave.StartWave();
@@ -41,12 +48,26 @@ public class WaveManager : MonoBehaviour
                 yield return null;
             }
 
-            // Attendi il tempo tra le onde (puoi anche inserire qui una logica per attendere che i nemici siano sconfitti)
+            // Attendi il tempo tra le wave
             yield return new WaitForSeconds(timeBetweenWaves);
 
             currentWaveIndex++;
         }
 
-        Debug.Log("Tutte le onde sono state completate!");
+        StartCoroutine(CheckEnemies());
+    }
+
+    private IEnumerator CheckEnemies()
+    {
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        while (enemies.Length > 0)
+        {
+            yield return null;
+            enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        }
+        Debug.Log("Tutti i nemici sono stati sconfitti!");
+
+        yield return new WaitForSeconds(1f);
+        GameManager.instance.WinGame();
     }
 }

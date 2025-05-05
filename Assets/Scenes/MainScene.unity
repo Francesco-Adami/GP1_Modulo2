@@ -227,6 +227,50 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 19979541}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &144791409
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 144791410}
+  - component: {fileID: 144791411}
+  m_Layer: 0
+  m_Name: EnemiesManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &144791410
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 144791409}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 218237263}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &144791411
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 144791409}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68b7fb479f5c3fb42991a347b5c1a4e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &218237262
 GameObject:
   m_ObjectHideFlags: 0
@@ -259,6 +303,7 @@ Transform:
   - {fileID: 300354641}
   - {fileID: 1799350691}
   - {fileID: 1779561974}
+  - {fileID: 144791410}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &225966584
@@ -456,8 +501,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84bbd5a7d4aaab2418b468ca217948d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerHp: 100
+  playerHp: 20
+  playerMoney: 100
   isGameActive: 0
+  hudUI: {fileID: 0}
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -517,10 +564,10 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 50
+  far clip plane: 70
   field of view: 46
   orthographic: 1
-  orthographic size: 8.6
+  orthographic size: 8.56363
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -545,7 +592,7 @@ Transform:
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
   m_LocalRotation: {x: 0.4073451, y: 0.19742787, z: -0.0906606, w: 0.8870586}
-  m_LocalPosition: {x: -6, y: 16.882727, z: -13.75}
+  m_LocalPosition: {x: -11.26, y: 31.33, z: -24.99}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1533,7 +1580,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: c6ac16b7f879386478c820cc8c64ced9, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1985,7 +2032,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waveData:
-  - {fileID: 11400000, guid: bdeefc514480af541b9f7ff4d7601232, type: 2}
+  - {fileID: 11400000, guid: 44380984c363a7d4791dba54e88c18aa, type: 2}
 --- !u!1 &1575995630
 GameObject:
   m_ObjectHideFlags: 0
@@ -2185,7 +2232,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UIContainer: {fileID: 1379940537}
-  startingGameUI: 2
+  startingGameUI: 1
 --- !u!1 &1816648981
 GameObject:
   m_ObjectHideFlags: 0
@@ -2262,7 +2309,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waveData:
-  - {fileID: 11400000, guid: bdeefc514480af541b9f7ff4d7601232, type: 2}
+  - {fileID: 11400000, guid: b39b830e9096e9746ac909f42bb69763, type: 2}
 --- !u!1 &1862472992
 GameObject:
   m_ObjectHideFlags: 0
@@ -2376,7 +2423,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waveData:
-  - {fileID: 11400000, guid: bdeefc514480af541b9f7ff4d7601232, type: 2}
+  - {fileID: 11400000, guid: 6a0643293d5f5c447b5fec2b73d9893b, type: 2}
 --- !u!1 &1989314486
 GameObject:
   m_ObjectHideFlags: 0
@@ -2388,7 +2435,7 @@ GameObject:
   - component: {fileID: 1989314487}
   m_Layer: 0
   m_Name: _Ambient
-  m_TagString: Untagged
+  m_TagString: Map
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
